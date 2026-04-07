@@ -1,0 +1,123 @@
+{
+  "name": "CSV to Google Sheets Workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a4707dbc-9c05-43fc-b6cb-ed011b2d2ab4",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "command": "cat {{$env.CSV_FILE_PATH}}"
+      },
+      "type": "n8n-nodes-safe-exec.safeExecuteCommand",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "2a6183eb-f1bc-4056-8aef-2f370a92592a",
+      "name": "Safe Execute Command"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Ambil stdout dari Safe Execute Command\nconst csvString = $json.stdout;\n\n// Pisahkan berdasarkan koma\nconst columns = csvString.split(',');\n\n// Kembalikan sebagai objek dengan nama kolom\nreturn {\n  col1: columns[0]?.trim() || '',\n  col2: columns[1]?.trim() || '',\n  col3: columns[2]?.trim() || '',\n  col4: columns[3]?.trim() || '',\n  col5: columns[4]?.trim() || ''\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "6e881889-be52-4cdf-b74b-1c3ca80548e2",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "sheet 1",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        624,
+        0
+      ],
+      "id": "e1482025-0d07-49be-8d69-2bb5eb55b6b9",
+      "name": "Append row in sheet"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Safe Execute Command",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Safe Execute Command": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "6d9c483d-fe45-417d-8fad-000cc4935cbd",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8aa4f02203e96b3bd3c37cb2b0e7edfdde9acc3986efdd0f5d2aeecb67c20b32"
+  },
+  "id": "keIfnAZKrMN6zshd",
+  "tags": []
+}
