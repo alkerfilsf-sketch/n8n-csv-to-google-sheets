@@ -22,6 +22,8 @@ Workflow ini membaca file CSV dari lokal, mem-parsing data, lalu mengirimnya ke 
 ## 📄 Contoh File CSV
 2026,04,07,Flashdisk,00001
 
+## 📸 Screenshot
+![Workflow] <img width="1366" height="602" alt="SCREEN" src="https://github.com/user-attachments/assets/eb4624f7-b413-4a43-92f2-e49e0b86e483" />
 
 
 ## 🧠 Catatan
