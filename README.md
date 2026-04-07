@@ -31,4 +31,4 @@ Workflow ini membaca file CSV dari lokal, mem-parsing data, lalu mengirimnya ke 
 - Pastikan file CSV ada di path yang sudah ditentukan
 
 ## 👤 Author
-Dibuat oleh Fahri Permana - SMK Az Zahra Sepatan
+Dibuat oleh Fahri Permana
